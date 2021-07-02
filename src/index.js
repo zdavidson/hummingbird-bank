@@ -1,4 +1,4 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 
 const balance = document.getElementById("balance");
 const deposit5 = document.getElementById("deposit5");
@@ -22,7 +22,16 @@ const reducer = (state = { balance: 0 }, action) => {
   }
 };
 
-const store = createStore(reducer);
+const logger = (store) => (next) => (action) => {
+  console.group(action.type);
+  console.info("dispatching", action);
+  let result = next(action);
+  console.log("next state: ", store.getState());
+  console.groupEnd(action.type);
+  return result;
+};
+
+const store = createStore(reducer, applyMiddleware(logger));
 
 store.subscribe(() => {
   console.log(

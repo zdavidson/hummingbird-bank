@@ -94,7 +94,16 @@ const reducer = (state = { balance: 0 }, action) => {
   }
 };
 
-const store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* createStore */])(reducer);
+const logger = store => next => action => {
+  console.group(action.type);
+  console.info("dispatching", action);
+  let result = next(action);
+  console.log("next state: ", store.getState());
+  console.groupEnd(action.type);
+  return result;
+};
+
+const store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* createStore */])(reducer, Object(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */])(logger));
 
 store.subscribe(() => {
   console.log("The state has changed. Here is the new state:", store.getState());
@@ -108,11 +117,11 @@ store.subscribe(() => {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* unused harmony export __DO_NOT_USE__ActionTypes */
-/* unused harmony export applyMiddleware */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return applyMiddleware; });
 /* unused harmony export bindActionCreators */
 /* unused harmony export combineReducers */
 /* unused harmony export compose */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createStore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createStore; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_helpers_esm_objectSpread2__ = __webpack_require__(3);
 
 
